@@ -53,8 +53,8 @@ $ brew install boost cmake eigen gnuplot
 # How to build
 
 ```
-$ git clone https://github.com/hotsuyuki/Graph-Based-SLAM.git
-$ cd Graph-Based-SLAM/sample_code_cpp/
+$ git clone --recursive https://github.com/hotsuyuki/Graph-Based-SLAM.git
+$ cd Graph-Based-SLAM/sample_code_cpp/src
 $ mkdir build
 $ cd build/
 $ cmake ..

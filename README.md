@@ -3,16 +3,14 @@
 Explanation of Graph based SLAM with C++ and Python sample code
 
 
-
 ## Explanation
 
-* English: [Graph-Based-SLAM_english.pdf](./Graph-Based-SLAM_english.pdf)
-
-* Japanese: [Graph-Based-SLAM_japanese.pdf](./Graph-Based-SLAM_japanese.pdf)
+[Graph-Based-SLAM_english.pdf](./Graph-Based-SLAM_english.pdf)
 
 |  |  |  |
 | :---: | :---: | :---: |
 | ![Graph-Based-SLAM_english-page-003.jpg](./tex/images/Graph-Based-SLAM_english-page-003.jpg) | ![Graph-Based-SLAM_english-page-005.jpg](./tex/images/Graph-Based-SLAM_english-page-005.jpg) | ![Graph-Based-SLAM_english-page-007.jpg](./tex/images/Graph-Based-SLAM_english-page-007.jpg) |
+
 
 ## Sample code [C++]
 
@@ -21,7 +19,6 @@ Explanation of Graph based SLAM with C++ and Python sample code
 | Odometry only | Sample SLAM |
 | :---: | :---: |
 | ![odom.png](./sample_code_cpp/images/odom.png) | ![slam.png](./sample_code_cpp/images/slam.png) |
-
 
 
 ## Sample code [Python]
