@@ -5,7 +5,7 @@ Explanation of Graph based SLAM with C++ and Python sample code
 
 ## Explanation
 
-[Graph-Based-SLAM_english.pdf](./Graph-Based-SLAM_english.pdf)
+[tex/Graph-Based-SLAM_english.pdf](./tex/Graph-Based-SLAM_english.pdf)
 
 |  |  |  |
 | :---: | :---: | :---: |
