@@ -1,23 +1,16 @@
-#include "FrameworkCustomizer.h"
+#include "FrameworkFactory.h"
 
 #include <algorithm>
 #include <fstream>
 #include <iostream>
 
 // slam/
-#include "CostFunction_EuclideanDistance.h"
-#include "CostFunction_PerpendicularDistance.h"
-#include "DataAssociator_LinearSearch.h"
-#include "DataAssociator_GridTable.h"
-#include "PointCloudMap_EntirePoint.h"
-#include "PointCloudMap_GridTable.h"
-#include "PointCloudMap_SubMap.h"
-#include "PoseEstimator_ICP.h"
-// #include "PoseEstimator_NDT.h"
-#include "PoseOptimizer_GradientDescent.h"
-#include "PoseOptimizer_LineSearch.h"
-#include "ReferenceScanMaker_LastScan.h"
-#include "ReferenceScanMaker_LocalMap.h"
+#include "CostFunctionFactory.h"
+#include "DataAssociatorFactory.h"
+#include "PointCloudMapFactory.h"
+#include "PoseEstimatorFactory.h"
+#include "PoseOptimizerFactory.h"
+#include "ReferenceScanMakerFactory.h"
 #include "LoopDetector.h"
 #include "ScanMatcher.h"
 #include "SlamFrontend.h"
@@ -30,39 +23,21 @@ namespace sample_slam {
 #define DELIMINATER_SYMBOL '='
 
 #define POINT_CLOUD_MAP_TYPE "point_cloud_map_type"
-#define ENTIRE_POINT "entire_point"
-#define GRID_TABLE "grid_table"
-#define SUB_MAP "sub_map"
-
 #define REFERENCE_SCAN_MAKER_TYPE "reference_scan_maker_type"
-#define LAST_SCAN "last_scan"
-#define LOCAL_MAP "local_map"
-
 #define POSE_ESTIMATOR_TYPE "pose_estimator_type"
-#define ICP "icp"
-// #define NDT "ndt"
-
 #define DATA_ASSOCIATOR_TYPE "data_associator_type"
-#define LINEAR_SEARCH "linear_search"
-#define GRID_TABLE "grid_table"
-
 #define POSE_OPTIMIZER_TYPE "pose_optimizer_type"
-#define GRADIENT_DESCENT "gradient_descent"
-#define LINE_SEARCH "line_search"
-
 #define COST_FUNCTION_TYPE "cost_function_type"
-#define EUCLIDEAN_DISTANCE "euclidean_distance"
-#define PERPENDICULAR_DISTANCE "perpendicular_distance"
 
 #define IS_SCAN_PREPROCESS "is_scan_preprocess"
 #define IS_ODOMETRY_FUSION "is_odometry_fusion"
 #define IS_LOOP_CLOSURE "is_loop_closure"
 
 
-void FrameworkCustomizer::CustomizeFramework(std::string framework_config_filename) {
+void FrameworkFactory::CustomizeFramework(std::string framework_config_filename) {
   std::ifstream framework_config_ifs(framework_config_filename, std::ios::in);
   if (!framework_config_ifs.is_open()) {
-    std::cerr << "[FrameworkCustomizer::CustomizeFramework()] ";
+    std::cerr << "[FrameworkFactory::CustomizeFramework()] ";
     std::cerr << "Error: framework_config_ifs.is_open() = " << framework_config_ifs.is_open() << "\n\n";
     return;
   }
@@ -84,76 +59,38 @@ void FrameworkCustomizer::CustomizeFramework(std::string framework_config_filena
     std::string key = line.substr(0, equal_pos);
     std::string value = line.substr(equal_pos + 1);
 
-    std::cout << "[FrameworkCustomizer::CustomizeFramework()] ";
+    std::cout << "[FrameworkFactory::CustomizeFramework()] ";
     std::cout << "key = " << key << ", value = " << value << "\n";
 
     if (key == POINT_CLOUD_MAP_TYPE)
     {
-      if (value == ENTIRE_POINT) {
-        point_cloud_map_ptr_ = new PointCloudMap_EntirePoint;
-      } else if (value == GRID_TABLE) {
-        point_cloud_map_ptr_ = new PointCloudMap_GridTable;
-      } else if (value == SUB_MAP) {
-        point_cloud_map_ptr_ = new PointCloudMap_SubMap;
-      } else {
-        point_cloud_map_ptr_ = nullptr;
-        std::cerr << "[FrameworkCustomizer::CustomizeFramework()] Error: Invalid key and/or value... \n\n";
-      }
+      delete point_cloud_map_ptr_;
+      point_cloud_map_ptr_ = PointCloudMapFactory::ProducePointCloudMapPtr(value);
     }
     else if (key == REFERENCE_SCAN_MAKER_TYPE)
     {
-      if (value == LAST_SCAN) {
-        reference_scan_maker_ptr_ = new ReferenceScanMaker_LastScan;
-      } else if (value == LOCAL_MAP) {
-        reference_scan_maker_ptr_ = new ReferenceScanMaker_LocalMap;
-      } else {
-        reference_scan_maker_ptr_ = nullptr;
-        std::cerr << "[FrameworkCustomizer::CustomizeFramework()] Error: Invalid key and/or value... \n\n";
-      }
+      delete reference_scan_maker_ptr_;
+      reference_scan_maker_ptr_ = ReferenceScanMakerFactory::ProduceReferenceScanMakerPtr(value);
     }
     else if (key == POSE_ESTIMATOR_TYPE)
     {
-      if (value == ICP) {
-        pose_estimator_ptr_ = new PoseEstimator_ICP;
-      // } else if (value == NDT) {
-        // pose_estimator_ptr_ = new PoseEstimator_NDT;
-      } else {
-        pose_estimator_ptr_ = nullptr;
-        std::cerr << "[FrameworkCustomizer::CustomizeFramework()] Error: Invalid key and/or value... \n\n";
-      }
+      delete pose_estimator_ptr_;
+      pose_estimator_ptr_ = PoseEstimatorFactory::ProducePoseEstimatorPtr(value);
     }
     else if (key == DATA_ASSOCIATOR_TYPE)
     {
-      if (value == LINEAR_SEARCH) {
-        data_associator_ptr_ = new DataAssociator_LinearSearch;
-      } else if (value == GRID_TABLE) {
-        data_associator_ptr_ = new DataAssociator_GridTable;
-      } else {
-        data_associator_ptr_ = nullptr;
-        std::cerr << "[FrameworkCustomizer::CustomizeFramework()] Error: Invalid key and/or value... \n\n";
-      }
+      delete data_associator_ptr_;
+      data_associator_ptr_ = DataAssociatorFactory::ProduceDataAssociatorPtr(value);
     }
     else if (key == POSE_OPTIMIZER_TYPE)
     {
-      if (value == GRADIENT_DESCENT) {
-        pose_optimizer_ptr_ = new PoseOptimizer_GradientDescent;
-      } else if (value == LINE_SEARCH) {
-        pose_optimizer_ptr_ = new PoseOptimizer_LineSearch;
-      } else {
-        pose_optimizer_ptr_ = nullptr;
-        std::cerr << "[FrameworkCustomizer::CustomizeFramework()] Error: Invalid key and/or value... \n\n";
-      }
+      delete pose_optimizer_ptr_;
+      pose_optimizer_ptr_ = PoseOptimizerFactory::ProducePoseOptimizerPtr(value);
     }
     else if (key == COST_FUNCTION_TYPE)
     {
-      if (value == EUCLIDEAN_DISTANCE) {
-        cost_function_ptr_ = new CostFunction_EuclideanDistance;
-      } else if (value == PERPENDICULAR_DISTANCE) {
-        cost_function_ptr_ = new CostFunction_PerpendicularDistance;
-      } else {
-        cost_function_ptr_ = nullptr;
-        std::cerr << "[FrameworkCustomizer::CustomizeFramework()] Error: Invalid key and/or value... \n\n";
-      }
+      delete cost_function_ptr_;
+      cost_function_ptr_ = CostFunctionFactory::ProduceCostFunctionPtr(value);
     }
     else if (key == IS_SCAN_PREPROCESS)
     {
@@ -177,13 +114,13 @@ void FrameworkCustomizer::CustomizeFramework(std::string framework_config_filena
         is_loop_closure_ = true;
 
         delete point_cloud_map_ptr_;
-        point_cloud_map_ptr_ = new PointCloudMap_SubMap;
+        point_cloud_map_ptr_ = PointCloudMapFactory::ProducePointCloudMapPtr(PointCloudMapType::SUB_MAP);
 
         delete data_associator_ptr_;
-        data_associator_ptr_ = new DataAssociator_GridTable;
+        data_associator_ptr_ = DataAssociatorFactory::ProduceDataAssociatorPtr(DataAssociatorType::GRID_TABLE);
 
         delete cost_function_ptr_;
-        cost_function_ptr_ = new CostFunction_PerpendicularDistance;
+        cost_function_ptr_ = CostFunctionFactory::ProduceCostFunctionPtr(CostFunctionType::PERPENDICULAR_DISTANCE);
       } else {
         is_loop_closure_ = false;
       }
@@ -193,22 +130,22 @@ void FrameworkCustomizer::CustomizeFramework(std::string framework_config_filena
   std::cout << "\n";
 
   if (point_cloud_map_ptr_ == nullptr) {
-    std::cerr << "[FrameworkCustomizer::CustomizeFramework()] Error: point_cloud_map_ptr_ == nullptr... \n\n";
+    std::cerr << "[FrameworkFactory::CustomizeFramework()] Error: point_cloud_map_ptr_ == nullptr... \n\n";
   }
   if (reference_scan_maker_ptr_ == nullptr) {
-    std::cerr << "[FrameworkCustomizer::CustomizeFramework()] Error: reference_scan_maker_ptr_ == nullptr... \n\n";
+    std::cerr << "[FrameworkFactory::CustomizeFramework()] Error: reference_scan_maker_ptr_ == nullptr... \n\n";
   }
   if (pose_estimator_ptr_ == nullptr) {
-    std::cerr << "[FrameworkCustomizer::CustomizeFramework()] Error: pose_estimator_ptr_ == nullptr... \n\n";
+    std::cerr << "[FrameworkFactory::CustomizeFramework()] Error: pose_estimator_ptr_ == nullptr... \n\n";
   }
   if (data_associator_ptr_ == nullptr) {
-    std::cerr << "[FrameworkCustomizer::CustomizeFramework()] Error: data_associator_ptr_ == nullptr... \n\n";
+    std::cerr << "[FrameworkFactory::CustomizeFramework()] Error: data_associator_ptr_ == nullptr... \n\n";
   }
   if (pose_optimizer_ptr_ == nullptr) {
-    std::cerr << "[FrameworkCustomizer::CustomizeFramework()] Error: pose_optimizer_ptr_ == nullptr... \n\n";
+    std::cerr << "[FrameworkFactory::CustomizeFramework()] Error: pose_optimizer_ptr_ == nullptr... \n\n";
   }
   if (cost_function_ptr_ == nullptr) {
-    std::cerr << "[FrameworkCustomizer::CustomizeFramework()] Error: cost_function_ptr_ == nullptr... \n\n";
+    std::cerr << "[FrameworkFactory::CustomizeFramework()] Error: cost_function_ptr_ == nullptr... \n\n";
   }
 
   slam_launcher_.SetPointCloudMapPtr(point_cloud_map_ptr_);

@@ -1,5 +1,5 @@
-#ifndef LAUNCHER_FRAMEWORKCUSTOMIZER_H_
-#define LAUNCHER_FRAMEWORKCUSTOMIZER_H_
+#ifndef LAUNCHER_FRAMEWORKFACTORY_H_
+#define LAUNCHER_FRAMEWORKFACTORY_H_
 
 
 #include <string>
@@ -16,9 +16,9 @@
 
 namespace sample_slam {
 
-class FrameworkCustomizer {
+class FrameworkFactory {
  public:
-  FrameworkCustomizer()
+  FrameworkFactory()
     : point_cloud_map_ptr_(nullptr),
       reference_scan_maker_ptr_(nullptr),
       pose_estimator_ptr_(nullptr),
@@ -29,7 +29,7 @@ class FrameworkCustomizer {
       is_odometry_fusion_(false),
       is_loop_closure_(false) {}
 
-  ~FrameworkCustomizer() {
+  ~FrameworkFactory() {
     delete point_cloud_map_ptr_;
     delete reference_scan_maker_ptr_;
     delete pose_estimator_ptr_;
@@ -62,4 +62,4 @@ class FrameworkCustomizer {
 }  // namespace sample_slam
 
 
-#endif  // LAUNCHER_FRAMEWORKCUSTOMIZER_H_
+#endif  // LAUNCHER_FRAMEWORKFACTORY_H_

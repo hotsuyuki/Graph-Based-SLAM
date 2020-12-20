@@ -7,7 +7,7 @@ Inspired by [furo-org/LittleSLAM](https://github.com/furo-org/LittleSLAM).
 | :---: | :---: |
 | ![odom.png](./images/odom.png) | ![slam.png](./images/slam.png) |
 
-The framework can be customized in `framework.cfg` as shown below:
+The framework can be customized in `framework.cfg` by Factory Method as shown below:
 
 | Module | Type | Description |
 | --- | --- | --- |
@@ -54,7 +54,8 @@ $ brew install boost cmake eigen gnuplot
 
 ```
 $ git clone --recursive https://github.com/hotsuyuki/Graph-Based-SLAM.git
-$ cd Graph-Based-SLAM/sample_code_cpp/src
+$ cd Graph-Based-SLAM/
+$ cd sample_code_cpp/src/
 $ mkdir build
 $ cd build/
 $ cmake ..
@@ -123,8 +124,8 @@ options:
 The program can be tested with Google C++ Testing Framework.
 
 ```
-$ cd Graph-Based-SLAM/sample_code_cpp/
-$ cd src/build/
+$ cd Graph-Based-SLAM/
+$ cd sample_code_cpp/src/build/
 $ ./test/utility/utility_test
 ```
 

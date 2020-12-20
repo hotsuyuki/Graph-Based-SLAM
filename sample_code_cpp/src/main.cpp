@@ -2,7 +2,7 @@
 #include <string>
 
 #include "cxxopts.hpp"
-#include "FrameworkCustomizer.h"
+#include "FrameworkFactory.h"
 #include "SlamLauncher.h"
 
 
@@ -50,9 +50,9 @@ int main(int argc, char* argv []) {
   }
 
   std::string framework_config_filename = executable_directory + "../../framework.cfg";
-  sample_slam::FrameworkCustomizer framework_customizer;
-  framework_customizer.CustomizeFramework(framework_config_filename);
-  sample_slam::SlamLauncher* slam_launcher_ptr = framework_customizer.GetSlamLauncherPtr();
+  sample_slam::FrameworkFactory framework_factory;
+  framework_factory.CustomizeFramework(framework_config_filename);
+  sample_slam::SlamLauncher* slam_launcher_ptr = framework_factory.GetSlamLauncherPtr();
 
   if(!slam_launcher_ptr->OpenSensorDataFile(sensor_data_filename)) {
     return EXIT_FAILURE;
