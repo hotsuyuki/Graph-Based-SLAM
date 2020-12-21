@@ -12,7 +12,7 @@ class CostFunction_EuclideanDistance : public CostFunction {
  public:
   CostFunction_EuclideanDistance() {}
 
-  virtual ~CostFunction_EuclideanDistance() {}
+  ~CostFunction_EuclideanDistance() {}
 
   double CalcErrorDistance(const LaserPoint2D& associated_reference_laser_point,
                            const LaserPoint2D& associated_current_laser_point) override;

@@ -12,7 +12,7 @@ class ReferenceScanMaker_LastScan : public ReferenceScanMaker {
  public:
   ReferenceScanMaker_LastScan() {}
 
-  virtual ~ReferenceScanMaker_LastScan() {}
+  ~ReferenceScanMaker_LastScan() {}
 
   void MakeReferenceScan() override;
 };

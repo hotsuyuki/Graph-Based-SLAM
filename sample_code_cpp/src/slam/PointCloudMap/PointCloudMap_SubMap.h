@@ -56,7 +56,7 @@ class PointCloudMap_SubMap : public PointCloudMap {
     sub_maps_.emplace_back(sub_map);
   }
 
-  virtual ~PointCloudMap_SubMap() {}
+  ~PointCloudMap_SubMap() {}
 
   const std::vector<SubMap>& GetSubMaps() const {
     return sub_maps_;

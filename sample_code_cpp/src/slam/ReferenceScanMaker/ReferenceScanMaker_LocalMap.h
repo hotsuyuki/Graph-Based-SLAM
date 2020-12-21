@@ -12,7 +12,7 @@ class ReferenceScanMaker_LocalMap : public ReferenceScanMaker {
  public:
   ReferenceScanMaker_LocalMap() {}
 
-  virtual ~ReferenceScanMaker_LocalMap() {}
+  ~ReferenceScanMaker_LocalMap() {}
 
   void MakeReferenceScan() override;
 };

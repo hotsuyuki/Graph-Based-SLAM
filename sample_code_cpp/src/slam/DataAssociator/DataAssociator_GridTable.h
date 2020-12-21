@@ -14,7 +14,7 @@ class DataAssociator_GridTable : public DataAssociator {
  public:
   DataAssociator_GridTable() {}
 
-  virtual ~DataAssociator_GridTable() {}
+  ~DataAssociator_GridTable() {}
 
   void SetReferenceLaserPoints(const std::vector<LaserPoint2D>& reference_laser_points) override;
 

@@ -20,7 +20,7 @@ class PointCloudMap_GridTable : public PointCloudMap {
     all_laser_points_.reserve(max_num_point_);
   }
 
-  virtual ~PointCloudMap_GridTable() {}
+  ~PointCloudMap_GridTable() {}
 
   void AddPose(const Pose2D& pose) override;
 

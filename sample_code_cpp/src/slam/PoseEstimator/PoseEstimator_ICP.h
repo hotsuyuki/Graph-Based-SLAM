@@ -12,7 +12,7 @@ class PoseEstimator_ICP : public PoseEstimator {
  public:
   PoseEstimator_ICP() {}
 
-  virtual ~PoseEstimator_ICP() {}
+  ~PoseEstimator_ICP() {}
 
   void EstimatePose(const Pose2D& init_pose) override;
 

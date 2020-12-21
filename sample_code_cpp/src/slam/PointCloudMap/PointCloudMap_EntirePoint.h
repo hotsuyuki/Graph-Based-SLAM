@@ -13,7 +13,7 @@ class PointCloudMap_EntirePoint : public PointCloudMap {
  public:
   PointCloudMap_EntirePoint() : num_skip_laser_point_(5) {}
 
-  virtual ~PointCloudMap_EntirePoint() {}
+  ~PointCloudMap_EntirePoint() {}
 
   void AddPose(const Pose2D& pose) override;
 

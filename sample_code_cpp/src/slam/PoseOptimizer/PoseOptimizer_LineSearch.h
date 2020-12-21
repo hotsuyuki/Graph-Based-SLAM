@@ -12,7 +12,7 @@ class PoseOptimizer_LineSearch : public PoseOptimizer {
  public:
   PoseOptimizer_LineSearch() : search_range_(2.0), max_iteration_(100) {}
 
-  virtual ~PoseOptimizer_LineSearch() {}
+  ~PoseOptimizer_LineSearch() {}
 
   double OptimizePose(const Pose2D& pre_optimize_pose, Pose2D& post_optimize_pose) override;
 

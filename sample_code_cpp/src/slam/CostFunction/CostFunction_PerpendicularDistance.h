@@ -12,7 +12,7 @@ class CostFunction_PerpendicularDistance : public CostFunction {
  public:
   CostFunction_PerpendicularDistance() {}
 
-  virtual ~CostFunction_PerpendicularDistance() {}
+  ~CostFunction_PerpendicularDistance() {}
 
   double CalcErrorDistance(const LaserPoint2D& associated_reference_laser_point,
                            const LaserPoint2D& associated_current_laser_point) override;

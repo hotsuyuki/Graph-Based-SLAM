@@ -4,13 +4,14 @@
 #include <fstream>
 #include <iostream>
 
-// slam/
+// launcher/FrameworkFactory/
 #include "CostFunctionFactory.h"
 #include "DataAssociatorFactory.h"
 #include "PointCloudMapFactory.h"
 #include "PoseEstimatorFactory.h"
 #include "PoseOptimizerFactory.h"
 #include "ReferenceScanMakerFactory.h"
+// slam/
 #include "LoopDetector.h"
 #include "ScanMatcher.h"
 #include "SlamFrontend.h"

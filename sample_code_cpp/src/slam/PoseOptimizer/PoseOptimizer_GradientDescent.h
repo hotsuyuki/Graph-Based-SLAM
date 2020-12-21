@@ -13,7 +13,7 @@ class PoseOptimizer_GradientDescent : public PoseOptimizer {
   PoseOptimizer_GradientDescent()
     : step_rate_(0.00001) {}
 
-  virtual ~PoseOptimizer_GradientDescent() {}
+  ~PoseOptimizer_GradientDescent() {}
 
   double OptimizePose(const Pose2D& pre_optimize_pose, Pose2D& post_optimize_pose) override;
 

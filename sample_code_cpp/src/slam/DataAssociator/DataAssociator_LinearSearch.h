@@ -13,7 +13,7 @@ class DataAssociator_LinearSearch : public DataAssociator {
   DataAssociator_LinearSearch()
     : distance_threshold_(0.2) {}
 
-  virtual ~DataAssociator_LinearSearch() {}
+  ~DataAssociator_LinearSearch() {}
 
   void SetReferenceLaserPoints(const std::vector<LaserPoint2D>& reference_laser_points) override;
 
